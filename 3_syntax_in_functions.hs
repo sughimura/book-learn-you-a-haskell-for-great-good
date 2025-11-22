@@ -110,3 +110,39 @@ calcBmis :: [(Double, Double)] -> [Double]
 calcBmis xs = [bmi w h | (w, h) <- xs]
   where
     bmi weight height = weight / height ^ 2
+
+-- 3.4
+cylinder :: Double -> Double -> Double
+cylinder r h =
+  let sideArea = 2 * pi * r * h
+      topArea = pi * r ^ 2
+   in sideArea + 2 * topArea
+
+calcBmis' :: [(Double, Double)] -> [Double]
+calcBmis' xs = [bmi | (w, h) <- xs, let bmi = w / h ^ 2]
+
+-- 3.5 case
+
+head'' :: [a] -> a
+head'' [] = error "No head for empty lists!"
+head'' (x : _x) = x
+
+head''' :: [a] -> a
+head''' xs = case xs of
+  [] -> error "No head for empty lists!"
+  (x : _) -> x
+
+describeList :: [a] -> String
+describeList ls =
+  "The list is "
+    ++ case ls of
+      [] -> "empty."
+      [x] -> "a singleton list."
+      xs -> "a longer list."
+
+describeList' :: [a] -> String
+describeList' ls = "The list is " ++ what ls
+  where
+    what [] = "empty."
+    what [xs] = "a singleton list."
+    what xs = "a longer list."
