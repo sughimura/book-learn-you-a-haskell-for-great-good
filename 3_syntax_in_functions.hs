@@ -1,4 +1,7 @@
 {-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
+
+import Distribution.Simple.Program.HcPkg (describe)
+
 {-# HLINT ignore "Use bimap" #-}
 sayMe :: Int -> String
 sayMe 1 = "One!"
@@ -7,7 +10,7 @@ sayMe x = "Not between 1 and 2"
 
 factorial' :: Int -> Int
 factorial' 0 = 1
-factorial' n = n * factorial' (n-1)
+factorial' n = n * factorial' (n - 1)
 
 charName :: Char -> String
 charName 'a' = "Albert"
@@ -31,59 +34,59 @@ third (_, _, z) = z
 
 head' :: [a] -> a
 head' [] = error "Can't call head on an empty list, dummy!"
-head' (x:_) = x
+head' (x : _) = x
 
 tell :: (Show a) => [a] -> String
 tell [] = "The list is empty"
-tell (x:[]) = "The list has one element: " ++ show x
-tell (x:y:[]) = "The list is two elements: " ++ show x ++ " and " ++ show y
-tell (x:y:_) = "This list is long. The first two elements are: " ++ show x ++ " and " ++ show y
+tell (x : []) = "The list has one element: " ++ show x
+tell (x : y : []) = "The list is two elements: " ++ show x ++ " and " ++ show y
+tell (x : y : _) = "This list is long. The first two elements are: " ++ show x ++ " and " ++ show y
 
 badAdd :: (Num a) => [a] -> a
-badAdd (x:y:z:[]) = x + y + z
+badAdd (x : y : z : []) = x + y + z
 
 firstLetter :: String -> String
 firstLetter "" = "Empty string, whoops!"
-firstLetter all@(x:xs) = "The first letter of " ++ all ++ " is " ++ [x]
+firstLetter all@(x : xs) = "The first letter of " ++ all ++ " is " ++ [x]
 
 -- 3.2
 bmiTell :: Double -> String
 bmiTell bmi
-    | bmi <= 18.5 = "You're underweight, you emo, you!"
-    | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
-    | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"
-    | otherwise = "You're a whale, congratulations!"
+  | bmi <= 18.5 = "You're underweight, you emo, you!"
+  | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+  | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"
+  | otherwise = "You're a whale, congratulations!"
 
 bmiTell' :: Double -> Double -> String
 bmiTell' weight height
-    | weight / height ^ 2 <= 18.5 = "You're underweight, you emo, you!"
-    | weight / height ^ 2 <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
-    | weight / height ^ 2 <= 30.0 = "You're fat! Lose some weight, fatty!"
-    | otherwise = "You're a whale, congratulations!"
+  | weight / height ^ 2 <= 18.5 = "You're underweight, you emo, you!"
+  | weight / height ^ 2 <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+  | weight / height ^ 2 <= 30.0 = "You're fat! Lose some weight, fatty!"
+  | otherwise = "You're a whale, congratulations!"
 
 max' :: (Ord a) => a -> a -> a
 max' a b
-    | a <= b = b
-    | otherwise = a
+  | a <= b = b
+  | otherwise = a
 
 myCompare :: (Ord a) => a -> a -> Ordering
 a `myCompare` b
-    | a == b = EQ
-    | a <= b = LT
-    | otherwise = GT
-
+  | a == b = EQ
+  | a <= b = LT
+  | otherwise = GT
 
 -- 3.3
 bmiTell'' :: Double -> Double -> String
 bmiTell'' weight height
-    | bmi <= skinny = "You're underweight, you emo, you!"
-    | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"
-    | bmi <= fat = "You're fat! Lose some weight, fatty!"
-    | otherwise = "You're a whale, congratulations!"
-    where bmi = weight / height ^ 2
-          skinny = 18.5
-          normal = 25.0
-          fat = 30.0
+  | bmi <= skinny = "You're underweight, you emo, you!"
+  | bmi <= normal = "You're supposedly normal. Pffft, I bet you're ugly!"
+  | bmi <= fat = "You're fat! Lose some weight, fatty!"
+  | otherwise = "You're a whale, congratulations!"
+  where
+    bmi = weight / height ^ 2
+    skinny = 18.5
+    normal = 25.0
+    fat = 30.0
 
 niceGreeting :: String
 niceGreeting = "Hello! So very nice to see you, "
@@ -98,10 +101,12 @@ greet name = badGreeting ++ " " ++ name
 
 initials :: String -> String -> String
 initials firstname lastname = [f] ++ ". " ++ [l] ++ "."
-    where (f:_) = firstname
-          (l:_) = lastname
+  where
+    (f : _) = firstname
+    (l : _) = lastname
 
 -- whereブロックの中の関数
 calcBmis :: [(Double, Double)] -> [Double]
 calcBmis xs = [bmi w h | (w, h) <- xs]
-    where bmi weight height = weight / height ^ 2
+  where
+    bmi weight height = weight / height ^ 2
